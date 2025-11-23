@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: todo-backend
+  jpa:
+    database: default
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
+    driverClassName: org.postgresql.Driver
+  flyway:
+    enabled: true
+  mvc:
+    problemdetails:
+      enabled: true
+security:
+  jwt:
+    issuer: ${JWT_ISSUER:}
+    publicKey: ${JWT_PUBLIC_KEY}
+    privateKey: ${JWT_PRIVATE_KEY}
+    expiration:
+      accessToken: ${JWT_AT_EXPIRATION:600}
+      refreshToken: ${JWT_RT_EXPIRATION:86400}

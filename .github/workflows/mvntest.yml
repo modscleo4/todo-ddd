@@ -1,0 +1,26 @@
+name: Maven Test
+on:
+  push:
+
+jobs:
+  mvn-test:
+    name: mvn
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version:
+          - "21"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java ${{ matrix.java-version }}
+        uses: actions/setup-java@v5
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'openjdk'
+          architecture: 'x64'
+          cache: maven
+
+      - name: Build and verify
+        run: mvn --batch-mode --update-snapshots verify

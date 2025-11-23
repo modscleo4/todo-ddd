@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: 'jdbc:sqlite::memory:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE'
+    username: ''
+    password: ''
+    driverClassName: org.sqlite.JDBC

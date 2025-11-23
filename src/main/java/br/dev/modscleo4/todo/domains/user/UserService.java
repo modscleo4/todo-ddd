@@ -1,0 +1,42 @@
+package br.dev.modscleo4.todo.domains.user;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class UserService {
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository repository;
+
+    public Optional<UserDetails> authenticate(String email, String password) {
+        var user = repository.findByEmail(email);
+        if (user.isEmpty()) {
+            return Optional.empty();
+        }
+
+        var credentials = new UsernamePasswordAuthenticationToken(email, password);
+        var authentication = authenticationManager.authenticate(credentials);
+        return Optional.ofNullable((UserDetails) authentication.getPrincipal());
+    }
+
+    @Transactional
+    public User create(String email, String password) {
+        var user = new User();
+        user.setEmail(email);
+        user.setPasswordHash(passwordEncoder.encode(password));
+        user.setRole(UserRole.USER);
+
+        return repository.save(user);
+    }
+}
