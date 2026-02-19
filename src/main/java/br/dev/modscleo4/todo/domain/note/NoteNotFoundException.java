@@ -5,6 +5,6 @@ import org.springframework.web.client.HttpClientErrorException;
 
 public class NoteNotFoundException extends HttpClientErrorException {
     public NoteNotFoundException() {
-        super(HttpStatus.FORBIDDEN, "Note not found");
+        super(HttpStatus.NOT_FOUND, "Note not found");
     }
 }

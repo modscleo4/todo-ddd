@@ -29,6 +29,11 @@ public class SecurityConfiguration {
         "/v3/api-docs/**",
         "/swagger-ui/**",
         "/error",
+        "/ui/**",
+        "/css/**",
+        "/js/**",
+        "/images/**",
+        "/favicon.ico",
     };
 
     @Bean
@@ -49,9 +54,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(
-        AuthenticationConfiguration authenticationConfiguration
-    ) {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

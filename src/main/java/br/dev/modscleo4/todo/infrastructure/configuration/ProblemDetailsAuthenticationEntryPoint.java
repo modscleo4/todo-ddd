@@ -3,14 +3,14 @@ package br.dev.modscleo4.todo.infrastructure.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.net.URI;
 
 public class ProblemDetailsAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -19,23 +19,15 @@ public class ProblemDetailsAuthenticationEntryPoint implements AuthenticationEnt
     public void commence(
         HttpServletRequest request,
         HttpServletResponse response,
-        AuthenticationException authException
+        @NonNull AuthenticationException authException
     ) throws IOException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/problem+json;charset=UTF-8");
 
-        String detail = authException == null ? "Authentication required." : authException.getMessage();
+        var pd = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, authException.getMessage());
+        pd.setTitle("Unauthorized");
+        pd.setInstance(URI.create(request.getRequestURI()));
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("type", "about:blank");
-        body.put("title", "Unauthorized");
-        body.put("status", HttpStatus.UNAUTHORIZED.value());
-        body.put("detail", detail);
-        body.put("instance", request.getRequestURI());
-        body.put("timestamp", Instant.now().toString());
-        body.put("path", request.getRequestURI());
-
-        objectMapper.writeValue(response.getOutputStream(), body);
+        objectMapper.writeValue(response.getOutputStream(), pd);
     }
 }
-

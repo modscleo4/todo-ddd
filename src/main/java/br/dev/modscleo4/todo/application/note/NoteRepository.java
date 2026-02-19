@@ -9,7 +9,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.UUID;
 
 public interface NoteRepository extends CrudRepository<Note, UUID> {
-    Iterable<Note> findAllByUser(User user);
-
     Page<Note> findAllByUser(User user, Pageable pageable);
 }

@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         java-version:
-          - "21"
+          - "25"
 
     steps:
       - uses: actions/checkout@v4
@@ -18,8 +18,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java-version }}
-          distribution: 'openjdk'
-          architecture: 'x64'
+          distribution: 'temurin'
           cache: maven
 
       - name: Build and verify

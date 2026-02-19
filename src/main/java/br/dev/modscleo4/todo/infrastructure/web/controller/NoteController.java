@@ -1,11 +1,10 @@
 package br.dev.modscleo4.todo.infrastructure.web.controller;
 
 import br.dev.modscleo4.todo.application.note.NoteService;
-import br.dev.modscleo4.todo.domain.note.Note;
+import br.dev.modscleo4.todo.domain.user.User;
 import br.dev.modscleo4.todo.infrastructure.web.dto.CreateNoteDTO;
 import br.dev.modscleo4.todo.infrastructure.web.dto.NoteInfoDTO;
 import br.dev.modscleo4.todo.infrastructure.web.dto.PatchNoteDTO;
-import br.dev.modscleo4.todo.domain.user.User;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +54,7 @@ public class NoteController {
      * Retorna uma nota específica do usuário.
      */
     @GetMapping("/{id}")
-    public NoteInfoDTO get(@PathVariable("id") String id, @Parameter(hidden = true) Authentication authentication) {
+    public NoteInfoDTO get(@PathVariable String id, @Parameter(hidden = true) Authentication authentication) {
         return new NoteInfoDTO(service.get((User) authentication.getPrincipal(), id));
     }
 
@@ -64,7 +63,7 @@ public class NoteController {
      */
     @PatchMapping("/{id}")
     public NoteInfoDTO update(
-        @PathVariable("id") String id,
+        @PathVariable String id,
         @RequestBody PatchNoteDTO data,
         @Parameter(hidden = true) Authentication authentication
     ) {
@@ -75,7 +74,7 @@ public class NoteController {
      * Exclui uma nota específica do usuário.
      */
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") String id, @Parameter(hidden = true) Authentication authentication) {
+    public void delete(@PathVariable String id, @Parameter(hidden = true) Authentication authentication) {
         service.delete((User) authentication.getPrincipal(), id);
     }
 }

@@ -62,7 +62,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @JdbcType(value = PostgreSQLEnumJdbcType.class)
-    private UserRole role;
+    private UserRole role = UserRole.USER;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnoreProperties("user")

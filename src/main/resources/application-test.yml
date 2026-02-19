@@ -1,6 +1,14 @@
 spring:
   datasource:
-    url: 'jdbc:sqlite::memory:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE'
+    url: 'jdbc:sqlite::memory:'
     username: ''
     password: ''
     driverClassName: org.sqlite.JDBC
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.community.dialect.SQLiteDialect
+security:
+  jwt:
+    publicKey: 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE4iSOZhW1XGxiA+t7TuovSdZ48b3oO5v/5Jp+DlAQSjH/G10R5c+qSDTrylnyUJiYxvQgmKvlp2vXuzTx7pbfqg=='
+    privateKey: 'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgDqgWYO9KGfATAJAAQutGSaKjpJ14DExRhd5v2hJadIKhRANCAATiJI5mFbVcbGID63tO6i9J1njxveg7m//kmn4OUBBKMf8bXRHlz6pINOvKWfJQmJjG9CCYq+Wna9e7NPHult+q'

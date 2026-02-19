@@ -10,6 +10,10 @@ spring:
     driverClassName: org.postgresql.Driver
   flyway:
     enabled: true
+    locations: classpath:db/migration/{vendor}
+  threads:
+    virtual:
+      enabled: true
   mvc:
     problemdetails:
       enabled: true

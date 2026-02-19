@@ -10,6 +10,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.IncorrectClaimException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.MissingClaimException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,9 +76,7 @@ public class JwtTokenService {
         token.setUser(user);
         token.setExpiresAt(this.getAccessExpirationDate());
 
-        tokenRepository.save(token);
-
-        return token;
+        return tokenRepository.save(token);
     }
 
     private Token persistRefreshToken(Token accessToken) {
@@ -87,9 +86,7 @@ public class JwtTokenService {
         token.setAccessToken(accessToken);
         token.setExpiresAt(this.getRefreshExpirationDate());
 
-        tokenRepository.save(token);
-
-        return token;
+        return tokenRepository.save(token);
     }
 
     private Instant getCreationDate() {
@@ -112,7 +109,7 @@ public class JwtTokenService {
                 .requireAudience(this.jwtConfiguration.getIssuer())
                 .build()
                 .parseSignedClaims(token);
-        } catch (MissingClaimException | IncorrectClaimException | ExpiredJwtException e) {
+        } catch (MissingClaimException | IncorrectClaimException | ExpiredJwtException | MalformedJwtException e) {
             log.error("Could not parse token", e);
             return null;
         }

@@ -5,6 +5,6 @@ import org.springframework.web.client.HttpClientErrorException;
 
 public class UserNotFoundException extends HttpClientErrorException {
     public UserNotFoundException() {
-        super(HttpStatus.NOT_FOUND, "User not found");
+        super(HttpStatus.UNAUTHORIZED, "User not found");
     }
 }

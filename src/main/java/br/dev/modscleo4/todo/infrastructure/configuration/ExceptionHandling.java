@@ -1,6 +1,7 @@
 package br.dev.modscleo4.todo.infrastructure.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
@@ -18,18 +19,22 @@ import java.time.Instant;
 public class ExceptionHandling extends ResponseEntityExceptionHandler {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ProblemDetail> handleException(Exception e, HttpServletRequest request) {
-        log.error("Unhandled {}.", e.getClass().getName(), e);
+        try (
+            var _ = MDC.putCloseable("method", request.getMethod());
+            var _ = MDC.putCloseable("path", request.getPathInfo())
+        ) {
+            log.error("Unhandled {}.", e.getClass().getName(), e);
 
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        pd.setTitle("Internal Server Error");
-        pd.setDetail(e.getMessage());
-        pd.setType(URI.create("https://example.com/problems/internal-server-error"));
-        pd.setInstance(URI.create(request.getRequestURI()));
-        pd.setProperty("timestamp", Instant.now().toString());
-        pd.setProperty("path", request.getRequestURI());
+            var pd = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            pd.setTitle("Internal Server Error");
+            pd.setDetail(e.getMessage());
+            pd.setInstance(URI.create(request.getRequestURI()));
+            pd.setProperty("timestamp", Instant.now().toString());
+            pd.setProperty("path", request.getRequestURI());
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .contentType(MediaType.parseMediaType("application/problem+json;charset=UTF-8"))
-            .body(pd);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .contentType(MediaType.parseMediaType("application/problem+json;charset=UTF-8"))
+                .body(pd);
+        }
     }
 }
