@@ -63,8 +63,8 @@ class JwtTokenServiceTest {
     }
 
     @Test
-    void getClaimsFromToken_shouldReturnNullOnInvalid() {
-        var claims = jwtTokenService.getClaimsFromToken("invalid");
+    void getClaimsFromSignedToken_shouldReturnNullOnInvalid() {
+        var claims = jwtTokenService.getClaimsFromSignedToken("invalid");
         assertNull(claims);
     }
 }

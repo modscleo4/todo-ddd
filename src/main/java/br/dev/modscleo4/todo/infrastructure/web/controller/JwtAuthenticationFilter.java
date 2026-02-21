@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        var claims = jwtTokenService.getClaimsFromToken(token);
+        var claims = jwtTokenService.getClaimsFromSignedToken(token);
         if (claims == null) {
             filterChain.doFilter(request, response);
             return;

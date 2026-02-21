@@ -27,8 +27,17 @@ public class OauthController {
      */
     @PostMapping(value = "/token", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public AuthInfoDTO signIn(@RequestBody GenerateTokenDTO data) {
-        var user = this.userService.authenticate(data.username(), data.password()).orElseThrow(InvalidCredentialsException::new);
+        var info = switch (data.grantType()) {
+            case PASSWORD -> this.jwtTokenService.authenticate(
+                this.userService.authenticate(data.username(), data.password())
+                    .orElseThrow(InvalidCredentialsException::new)
+            );
 
-        return new AuthInfoDTO(this.jwtTokenService.authenticate(user));
+            case REFRESH_TOKEN -> this.jwtTokenService.refresh(data.refreshToken());
+
+            default -> throw new IllegalArgumentException("Invalid grant type.");
+        };
+
+        return new AuthInfoDTO(info);
     }
 }

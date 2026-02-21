@@ -8,7 +8,8 @@ public record GenerateTokenDTO(
     String username,
     String password,
     @JsonProperty("client_id") String clientId,
-    @JsonProperty("client_secret") String clientSecret
+    @JsonProperty("client_secret") String clientSecret,
+    @JsonProperty("refresh_token") String refreshToken
 ) {
 
 }
