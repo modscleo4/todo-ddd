@@ -3,6 +3,8 @@ package br.dev.modscleo4.todo.application.profile;
 import br.dev.modscleo4.todo.domain.profile.Profile;
 import br.dev.modscleo4.todo.domain.profile.ProfileAlreadyExistsException;
 import br.dev.modscleo4.todo.domain.profile.ProfileNotFoundException;
+import br.dev.modscleo4.todo.domain.profile.ProfileRepository;
+import br.dev.modscleo4.todo.domain.profile.ProfileServicePort;
 import br.dev.modscleo4.todo.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,7 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ProfileService {
+public class ProfileServiceAdapter implements ProfileServicePort {
     private final ProfileRepository repository;
 
     @Transactional

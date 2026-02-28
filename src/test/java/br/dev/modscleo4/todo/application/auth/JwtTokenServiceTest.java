@@ -1,8 +1,9 @@
-package br.dev.modscleo4.todo.application.token;
+package br.dev.modscleo4.todo.application.auth;
 
 import br.dev.modscleo4.todo.TestUtils;
 import br.dev.modscleo4.todo.domain.user.User;
-import br.dev.modscleo4.todo.infrastructure.configuration.JwtConfiguration;
+import br.dev.modscleo4.todo.domain.auth.JwtConfiguration;
+import br.dev.modscleo4.todo.domain.auth.TokenRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,7 @@ class JwtTokenServiceTest {
     @Mock
     private TokenRepository tokenRepository;
     @InjectMocks
-    private JwtTokenService jwtTokenService;
+    private JwtTokenServiceAdapter jwtTokenService;
 
     @BeforeEach
     void setUp() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {

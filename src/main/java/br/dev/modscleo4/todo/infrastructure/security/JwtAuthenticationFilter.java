@@ -1,8 +1,8 @@
-package br.dev.modscleo4.todo.infrastructure.web.controller;
+package br.dev.modscleo4.todo.infrastructure.security;
 
-import br.dev.modscleo4.todo.application.token.JwtTokenService;
+import br.dev.modscleo4.todo.domain.auth.JwtTokenServicePort;
 import br.dev.modscleo4.todo.domain.user.UserNotFoundException;
-import br.dev.modscleo4.todo.application.user.UserRepository;
+import br.dev.modscleo4.todo.domain.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final JwtTokenService jwtTokenService;
+    private final JwtTokenServicePort jwtTokenService;
     private final UserRepository userRepository;
 
     @Override

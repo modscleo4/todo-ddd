@@ -1,11 +1,13 @@
-package br.dev.modscleo4.todo.application.token;
+package br.dev.modscleo4.todo.application.auth;
 
 import br.dev.modscleo4.todo.domain.auth.InvalidCredentialsException;
+import br.dev.modscleo4.todo.domain.auth.JwtConfiguration;
+import br.dev.modscleo4.todo.domain.auth.JwtTokenServicePort;
 import br.dev.modscleo4.todo.domain.auth.OauthInfo;
 import br.dev.modscleo4.todo.domain.auth.Token;
+import br.dev.modscleo4.todo.domain.auth.TokenRepository;
 import br.dev.modscleo4.todo.domain.auth.TokenType;
 import br.dev.modscleo4.todo.domain.user.User;
-import br.dev.modscleo4.todo.infrastructure.configuration.JwtConfiguration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.IncorrectClaimException;
@@ -30,7 +32,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class JwtTokenService {
+public class JwtTokenServiceAdapter implements JwtTokenServicePort {
     private final TokenRepository tokenRepository;
     private final JwtConfiguration jwtConfiguration;
 

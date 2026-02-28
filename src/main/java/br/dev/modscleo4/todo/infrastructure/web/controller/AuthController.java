@@ -1,8 +1,8 @@
 package br.dev.modscleo4.todo.infrastructure.web.controller;
 
-import br.dev.modscleo4.todo.application.token.JwtTokenService;
-import br.dev.modscleo4.todo.application.user.UserService;
+import br.dev.modscleo4.todo.domain.auth.JwtTokenServicePort;
 import br.dev.modscleo4.todo.domain.user.User;
+import br.dev.modscleo4.todo.domain.user.UserServicePort;
 import br.dev.modscleo4.todo.infrastructure.web.dto.AuthInfoDTO;
 import br.dev.modscleo4.todo.infrastructure.web.dto.CreateUserDTO;
 import br.dev.modscleo4.todo.infrastructure.web.dto.UserInfoDTO;
@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
-    private final JwtTokenService jwtTokenService;
-    private final UserService userService;
+    private final JwtTokenServicePort jwtTokenService;
+    private final UserServicePort userService;
 
     /**
      * Cria um novo usuário e retorna um token de autenticação.

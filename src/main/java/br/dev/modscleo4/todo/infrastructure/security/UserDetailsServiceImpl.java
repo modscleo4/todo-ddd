@@ -1,6 +1,6 @@
-package br.dev.modscleo4.todo.application.auth;
+package br.dev.modscleo4.todo.infrastructure.security;
 
-import br.dev.modscleo4.todo.application.user.UserRepository;
+import br.dev.modscleo4.todo.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.userdetails.UserDetails;

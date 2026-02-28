@@ -1,6 +1,7 @@
 package br.dev.modscleo4.todo.application.user;
 
 import br.dev.modscleo4.todo.domain.user.User;
+import br.dev.modscleo4.todo.domain.user.UserRepository;
 import br.dev.modscleo4.todo.domain.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserService {
+public class UserServiceAdapter {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;

@@ -1,6 +1,6 @@
 package br.dev.modscleo4.todo.infrastructure.web.controller;
 
-import br.dev.modscleo4.todo.application.note.NoteService;
+import br.dev.modscleo4.todo.domain.note.NoteServicePort;
 import br.dev.modscleo4.todo.domain.user.User;
 import br.dev.modscleo4.todo.infrastructure.web.dto.CreateNoteDTO;
 import br.dev.modscleo4.todo.infrastructure.web.dto.NoteInfoDTO;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 public class NoteController {
-    private final NoteService service;
+    private final NoteServicePort service;
 
     /**
      * Retorna todas as notas do usuário.

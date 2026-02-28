@@ -1,6 +1,5 @@
-package br.dev.modscleo4.todo.infrastructure.configuration;
+package br.dev.modscleo4.todo.infrastructure.security;
 
-import br.dev.modscleo4.todo.infrastructure.web.controller.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

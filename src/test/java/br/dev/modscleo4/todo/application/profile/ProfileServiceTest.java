@@ -5,6 +5,7 @@ import br.dev.modscleo4.todo.domain.profile.Profile;
 import br.dev.modscleo4.todo.domain.profile.ProfileAlreadyExistsException;
 import br.dev.modscleo4.todo.domain.profile.ProfileNotFoundException;
 import br.dev.modscleo4.todo.domain.user.User;
+import br.dev.modscleo4.todo.domain.profile.ProfileRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -26,7 +27,7 @@ class ProfileServiceTest {
     @Mock
     private ProfileRepository profileRepository;
     @InjectMocks
-    private ProfileService profileService;
+    private ProfileServiceAdapter profileService;
 
     @Test
     void create_shouldThrowWhenUserAlreadyHasProfile() {

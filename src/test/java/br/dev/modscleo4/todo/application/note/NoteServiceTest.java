@@ -4,6 +4,7 @@ import br.dev.modscleo4.todo.TestUtils;
 import br.dev.modscleo4.todo.domain.note.Note;
 import br.dev.modscleo4.todo.domain.note.NoteNotFoundException;
 import br.dev.modscleo4.todo.domain.user.User;
+import br.dev.modscleo4.todo.domain.note.NoteRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -28,7 +29,7 @@ class NoteServiceTest {
     @Mock
     private NoteRepository noteRepository;
     @InjectMocks
-    private NoteService noteService;
+    private NoteServiceAdapter noteService;
 
     @Test
     void create_shouldSetOwnerAndSave() {

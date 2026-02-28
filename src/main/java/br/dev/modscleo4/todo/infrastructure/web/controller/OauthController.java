@@ -1,8 +1,8 @@
 package br.dev.modscleo4.todo.infrastructure.web.controller;
 
-import br.dev.modscleo4.todo.application.token.JwtTokenService;
-import br.dev.modscleo4.todo.application.user.UserService;
 import br.dev.modscleo4.todo.domain.auth.InvalidCredentialsException;
+import br.dev.modscleo4.todo.domain.auth.JwtTokenServicePort;
+import br.dev.modscleo4.todo.domain.user.UserServicePort;
 import br.dev.modscleo4.todo.infrastructure.web.dto.AuthInfoDTO;
 import br.dev.modscleo4.todo.infrastructure.web.dto.GenerateTokenDTO;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/oauth")
 @RequiredArgsConstructor
 public class OauthController {
-    private final JwtTokenService jwtTokenService;
-    private final UserService userService;
+    private final JwtTokenServicePort jwtTokenService;
+    private final UserServicePort userService;
 
     /**
      * Gera um token JWT para o usuário.

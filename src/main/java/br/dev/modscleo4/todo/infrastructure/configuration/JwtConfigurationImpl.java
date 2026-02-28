@@ -1,5 +1,6 @@
 package br.dev.modscleo4.todo.infrastructure.configuration;
 
+import br.dev.modscleo4.todo.domain.auth.JwtConfiguration;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,7 @@ import java.util.Base64;
 @Configuration
 @RequiredArgsConstructor
 @Getter
-public class JwtConfiguration {
+public class JwtConfigurationImpl implements JwtConfiguration {
     @Value("${security.jwt.issuer}:${spring.application.name}")
     private String issuer;
 

@@ -1,4 +1,4 @@
-package br.dev.modscleo4.todo.infrastructure.configuration;
+package br.dev.modscleo4.todo.infrastructure.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;

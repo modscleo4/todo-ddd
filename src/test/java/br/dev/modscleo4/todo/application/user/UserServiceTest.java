@@ -1,6 +1,7 @@
 package br.dev.modscleo4.todo.application.user;
 
 import br.dev.modscleo4.todo.TestUtils;
+import br.dev.modscleo4.todo.domain.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,7 +28,7 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
     @InjectMocks
-    private UserService userService;
+    private UserServiceAdapter userService;
 
     @Test
     void authenticate_shouldReturnEmptyWhenUserNotFound() {

@@ -2,6 +2,8 @@ package br.dev.modscleo4.todo.application.note;
 
 import br.dev.modscleo4.todo.domain.note.Note;
 import br.dev.modscleo4.todo.domain.note.NoteNotFoundException;
+import br.dev.modscleo4.todo.domain.note.NoteRepository;
+import br.dev.modscleo4.todo.domain.note.NoteServicePort;
 import br.dev.modscleo4.todo.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class NoteService {
+public class NoteServiceAdapter implements NoteServicePort {
     private final NoteRepository noteRepository;
 
     @Transactional

@@ -1,6 +1,5 @@
-package br.dev.modscleo4.todo.application.user;
+package br.dev.modscleo4.todo.domain.user;
 
-import br.dev.modscleo4.todo.domain.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

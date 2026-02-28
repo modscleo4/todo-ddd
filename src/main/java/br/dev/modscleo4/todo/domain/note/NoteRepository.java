@@ -1,6 +1,5 @@
-package br.dev.modscleo4.todo.application.note;
+package br.dev.modscleo4.todo.domain.note;
 
-import br.dev.modscleo4.todo.domain.note.Note;
 import br.dev.modscleo4.todo.domain.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

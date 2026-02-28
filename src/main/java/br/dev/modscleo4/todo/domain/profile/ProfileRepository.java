@@ -1,6 +1,5 @@
-package br.dev.modscleo4.todo.application.profile;
+package br.dev.modscleo4.todo.domain.profile;
 
-import br.dev.modscleo4.todo.domain.profile.Profile;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
