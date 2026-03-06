@@ -1,7 +1,7 @@
-package br.dev.modscleo4.todo.infrastructure.web.controller;
+package br.dev.modscleo4.todo.infrastructure.presentation.controller;
 
 import br.dev.modscleo4.todo.domain.user.UserServicePort;
-import br.dev.modscleo4.todo.infrastructure.web.dto.UserInfoDTO;
+import br.dev.modscleo4.todo.infrastructure.presentation.dto.UserInfoDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

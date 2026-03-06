@@ -1,10 +1,7 @@
 package br.dev.modscleo4.todo.domain.profile;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-
-public class ProfileNotFoundException extends HttpClientErrorException {
+public class ProfileNotFoundException extends RuntimeException {
     public ProfileNotFoundException() {
-        super(HttpStatus.NOT_FOUND, "Profile not found");
+        super("Profile not found");
     }
 }

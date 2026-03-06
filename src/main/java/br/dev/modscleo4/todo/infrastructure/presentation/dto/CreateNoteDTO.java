@@ -1,4 +1,4 @@
-package br.dev.modscleo4.todo.infrastructure.web.dto;
+package br.dev.modscleo4.todo.infrastructure.presentation.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

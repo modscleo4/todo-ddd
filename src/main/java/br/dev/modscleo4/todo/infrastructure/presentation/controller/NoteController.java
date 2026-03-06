@@ -1,10 +1,10 @@
-package br.dev.modscleo4.todo.infrastructure.web.controller;
+package br.dev.modscleo4.todo.infrastructure.presentation.controller;
 
 import br.dev.modscleo4.todo.domain.note.NoteServicePort;
 import br.dev.modscleo4.todo.domain.user.User;
-import br.dev.modscleo4.todo.infrastructure.web.dto.CreateNoteDTO;
-import br.dev.modscleo4.todo.infrastructure.web.dto.NoteInfoDTO;
-import br.dev.modscleo4.todo.infrastructure.web.dto.PatchNoteDTO;
+import br.dev.modscleo4.todo.infrastructure.presentation.dto.CreateNoteDTO;
+import br.dev.modscleo4.todo.infrastructure.presentation.dto.NoteInfoDTO;
+import br.dev.modscleo4.todo.infrastructure.presentation.dto.PatchNoteDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

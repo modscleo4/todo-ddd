@@ -1,10 +1,10 @@
-package br.dev.modscleo4.todo.infrastructure.web.controller;
+package br.dev.modscleo4.todo.infrastructure.presentation.controller;
 
 import br.dev.modscleo4.todo.domain.auth.InvalidCredentialsException;
 import br.dev.modscleo4.todo.domain.auth.JwtTokenServicePort;
 import br.dev.modscleo4.todo.domain.user.UserServicePort;
-import br.dev.modscleo4.todo.infrastructure.web.dto.AuthInfoDTO;
-import br.dev.modscleo4.todo.infrastructure.web.dto.GenerateTokenDTO;
+import br.dev.modscleo4.todo.infrastructure.presentation.dto.AuthInfoDTO;
+import br.dev.modscleo4.todo.infrastructure.presentation.dto.GenerateTokenDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;

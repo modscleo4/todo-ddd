@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserJpaRepository extends JpaRepository<User, UUID>, UserRepository {
+public interface JpaUserRepository extends JpaRepository<User, UUID>, UserRepository {
     @Query("""
         SELECT u
         FROM User u

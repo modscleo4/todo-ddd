@@ -20,5 +20,4 @@ public final class StringToGrantTypeEnumConverterFactory implements ConverterFac
             return (T) GrantType.valueOf(source.toUpperCase());
         }
     }
-
 }

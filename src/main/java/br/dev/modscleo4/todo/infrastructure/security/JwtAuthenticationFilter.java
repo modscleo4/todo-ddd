@@ -1,7 +1,7 @@
 package br.dev.modscleo4.todo.infrastructure.security;
 
+import br.dev.modscleo4.todo.domain.auth.InvalidCredentialsException;
 import br.dev.modscleo4.todo.domain.auth.JwtTokenServicePort;
-import br.dev.modscleo4.todo.domain.user.UserNotFoundException;
 import br.dev.modscleo4.todo.domain.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         var subject = claims.getPayload().getSubject();
-        var user = userRepository.findByEmail(subject).orElseThrow(UserNotFoundException::new);
+        var user = userRepository.findByEmail(subject).orElseThrow(InvalidCredentialsException::new);
 
         var authentication = new UsernamePasswordAuthenticationToken(
             user,

@@ -1,13 +1,13 @@
 package br.dev.modscleo4.todo.infrastructure.persistence;
 
-import br.dev.modscleo4.todo.domain.note.Note;
-import br.dev.modscleo4.todo.domain.note.NoteRepository;
+import br.dev.modscleo4.todo.domain.auth.Token;
+import br.dev.modscleo4.todo.domain.auth.TokenRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface NoteJpaRepository extends JpaRepository<Note, UUID>, NoteRepository {
+public interface JpaTokenRepository extends JpaRepository<Token, UUID>, TokenRepository {
 
 }

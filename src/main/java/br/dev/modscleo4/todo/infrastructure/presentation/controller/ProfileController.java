@@ -1,11 +1,11 @@
-package br.dev.modscleo4.todo.infrastructure.web.controller;
+package br.dev.modscleo4.todo.infrastructure.presentation.controller;
 
 import br.dev.modscleo4.todo.domain.profile.ProfileNotFoundException;
 import br.dev.modscleo4.todo.domain.profile.ProfileServicePort;
 import br.dev.modscleo4.todo.domain.user.User;
-import br.dev.modscleo4.todo.infrastructure.web.dto.CreateProfileDTO;
-import br.dev.modscleo4.todo.infrastructure.web.dto.PatchProfileDTO;
-import br.dev.modscleo4.todo.infrastructure.web.dto.ProfileInfoDTO;
+import br.dev.modscleo4.todo.infrastructure.presentation.dto.CreateProfileDTO;
+import br.dev.modscleo4.todo.infrastructure.presentation.dto.PatchProfileDTO;
+import br.dev.modscleo4.todo.infrastructure.presentation.dto.ProfileInfoDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

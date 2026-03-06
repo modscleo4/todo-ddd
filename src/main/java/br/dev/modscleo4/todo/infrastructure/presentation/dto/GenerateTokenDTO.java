@@ -1,4 +1,4 @@
-package br.dev.modscleo4.todo.infrastructure.web.dto;
+package br.dev.modscleo4.todo.infrastructure.presentation.dto;
 
 import br.dev.modscleo4.todo.domain.auth.GrantType;
 import com.fasterxml.jackson.annotation.JsonProperty;
