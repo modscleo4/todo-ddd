@@ -3,9 +3,12 @@ package br.dev.modscleo4.todo.application.user;
 import br.dev.modscleo4.todo.domain.user.User;
 import br.dev.modscleo4.todo.domain.user.UserRepository;
 import br.dev.modscleo4.todo.domain.user.UserRole;
+import br.dev.modscleo4.todo.domain.user.UserServicePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,11 +21,17 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserServiceAdapter {
+public class UserServiceAdapter implements UserServicePort {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;
 
+    @Transactional(readOnly = true)
+    public Page<User> getAll(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
     public Optional<UserDetails> authenticate(String email, String password) {
         try (var _ = MDC.putCloseable("email", email)) {
             var user = repository.findByEmail(email);

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class JwtTokenServiceAdapter implements JwtTokenServicePort {
-    private final TokenRepository tokenRepository;
+    private final TokenRepository repository;
     private final JwtConfiguration jwtConfiguration;
 
     @Transactional
@@ -62,13 +62,13 @@ public class JwtTokenServiceAdapter implements JwtTokenServicePort {
             var _ = MDC.putCloseable("sub", claims.getPayload().getSubject())
         ) {
             log.info("Refreshing token...");
-            var refreshToken = tokenRepository.getReferenceById(UUID.fromString(claims.getPayload().getId()));
+            var refreshToken = repository.getReferenceById(UUID.fromString(claims.getPayload().getId()));
             if (refreshToken.getExpiresAt().isBefore(Instant.now())) {
                 throw new InvalidCredentialsException();
             }
 
             refreshToken.setExpiresAt(Instant.now());
-            tokenRepository.save(refreshToken);
+            repository.save(refreshToken);
 
             var accessToken = this.persistAccessToken(refreshToken.getUser());
             refreshToken = this.persistRefreshToken(accessToken);
@@ -113,7 +113,7 @@ public class JwtTokenServiceAdapter implements JwtTokenServicePort {
         token.setUser(user);
         token.setExpiresAt(this.getAccessExpirationDate());
 
-        return tokenRepository.save(token);
+        return repository.save(token);
     }
 
     private Token persistRefreshToken(Token accessToken) {
@@ -123,7 +123,7 @@ public class JwtTokenServiceAdapter implements JwtTokenServicePort {
         token.setAccessToken(accessToken);
         token.setExpiresAt(this.getRefreshExpirationDate());
 
-        return tokenRepository.save(token);
+        return repository.save(token);
     }
 
     private Instant getCreationDate() {

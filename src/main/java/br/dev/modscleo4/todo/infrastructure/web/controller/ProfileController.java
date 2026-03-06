@@ -6,10 +6,14 @@ import br.dev.modscleo4.todo.domain.user.User;
 import br.dev.modscleo4.todo.infrastructure.web.dto.CreateProfileDTO;
 import br.dev.modscleo4.todo.infrastructure.web.dto.PatchProfileDTO;
 import br.dev.modscleo4.todo.infrastructure.web.dto.ProfileInfoDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,12 +24,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/profile")
+@PreAuthorize("isAuthenticated()")
+@SecurityRequirement(name = "oauth2")
+@Tag(name = "Perfil", description = "Gerenciamento do perfil do usuário.")
 @RequiredArgsConstructor
 @Slf4j
 public class ProfileController {
     private final ProfileServicePort profileService;
 
     @GetMapping("")
+    @Operation(summary = "Obtém o perfil do usuário.")
     public ProfileInfoDTO get(@Parameter(hidden = true) Authentication authentication) {
         var profile = ((User) authentication.getPrincipal()).getProfile();
         if (profile == null) {
@@ -36,6 +44,7 @@ public class ProfileController {
     }
 
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Operation(summary = "Cria o perfil do usuário.")
     public ProfileInfoDTO create(
         @RequestBody CreateProfileDTO data,
         @Parameter(hidden = true) Authentication authentication
@@ -47,6 +56,7 @@ public class ProfileController {
     }
 
     @PatchMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Operation(summary = "Atualiza o perfil do usuário.")
     public ProfileInfoDTO update(
         @RequestBody PatchProfileDTO data,
         @Parameter(hidden = true) Authentication authentication

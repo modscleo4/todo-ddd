@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         var token = recoveryToken(request);
-        if (token == null) {
+        if (token == null || token.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -61,6 +61,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String recoveryToken(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null) {
+            if (!authorizationHeader.startsWith("Bearer ")) {
+                return null;
+            }
+
             return authorizationHeader.replace("Bearer ", "");
         }
 

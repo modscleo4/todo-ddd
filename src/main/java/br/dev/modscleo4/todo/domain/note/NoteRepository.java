@@ -5,8 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
-public interface NoteRepository extends CrudRepository<Note, UUID> {
+public interface NoteRepository {
+    Optional<Note> findById(UUID id);
+
     Page<Note> findAllByUser(User user, Pageable pageable);
+
+    Note save(Note note);
+
+    void delete(Note note);
 }

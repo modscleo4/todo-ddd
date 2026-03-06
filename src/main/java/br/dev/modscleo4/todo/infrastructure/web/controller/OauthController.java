@@ -5,27 +5,25 @@ import br.dev.modscleo4.todo.domain.auth.JwtTokenServicePort;
 import br.dev.modscleo4.todo.domain.user.UserServicePort;
 import br.dev.modscleo4.todo.infrastructure.web.dto.AuthInfoDTO;
 import br.dev.modscleo4.todo.infrastructure.web.dto.GenerateTokenDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Autenticação e geração de token JWT Oauth2.
- */
 @RestController
 @RequestMapping("/oauth")
+@Tag(name = "Oauth2", description = "Autenticação e geração de token JWT Oauth2.")
 @RequiredArgsConstructor
 public class OauthController {
     private final JwtTokenServicePort jwtTokenService;
     private final UserServicePort userService;
 
-    /**
-     * Gera um token JWT para o usuário.
-     */
-    @PostMapping(value = "/token", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/token", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @Operation(summary = "Gera um token JWT para o usuário.")
     public AuthInfoDTO signIn(@RequestBody GenerateTokenDTO data) {
         var info = switch (data.grantType()) {
             case PASSWORD -> this.jwtTokenService.authenticate(

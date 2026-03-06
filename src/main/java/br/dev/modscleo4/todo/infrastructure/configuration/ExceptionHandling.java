@@ -6,17 +6,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.nio.file.AccessDeniedException;
 import java.time.Instant;
 
 @RestControllerAdvice
 @Slf4j
 public class ExceptionHandling extends ResponseEntityExceptionHandler {
+    @ExceptionHandler({AuthorizationDeniedException.class, AccessDeniedException.class})
+    public ProblemDetail handleAccessDeniedException(Exception e) {
+        var pd = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
+        pd.setTitle("Access Denied");
+        pd.setDetail(e.getMessage());
+
+        return pd;
+    }
+
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ProblemDetail> handleException(Exception e, HttpServletRequest request) {
         try (

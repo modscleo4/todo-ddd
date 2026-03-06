@@ -2,14 +2,16 @@ package br.dev.modscleo4.todo.infrastructure.web.dto;
 
 import br.dev.modscleo4.todo.domain.auth.GrantType;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.web.bind.annotation.BindParam;
 
 public record GenerateTokenDTO(
-    @JsonProperty("grant_type") GrantType grantType,
+    @BindParam("grant_type") @JsonProperty("grant_type") GrantType grantType,
     String username,
     String password,
-    @JsonProperty("client_id") String clientId,
-    @JsonProperty("client_secret") String clientSecret,
-    @JsonProperty("refresh_token") String refreshToken
+    @BindParam("client_id") @JsonProperty("client_id") String clientId,
+    @BindParam("client_secret") @JsonProperty("client_secret") String clientSecret,
+    @BindParam("refresh_token") @JsonProperty("refresh_token") String refreshToken,
+    String scope
 ) {
 
 }
