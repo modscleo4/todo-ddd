@@ -62,6 +62,10 @@ public class ProfileController {
         @Parameter(hidden = true) Authentication authentication
     ) {
         var user = (User) authentication.getPrincipal();
+        if (user.getProfile() == null) {
+            throw new ProfileNotFoundException();
+        }
+
         var profile = profileService.update(user.getProfile(), data.name());
 
         return new ProfileInfoDTO(profile);

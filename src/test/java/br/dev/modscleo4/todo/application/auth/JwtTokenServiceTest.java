@@ -1,9 +1,9 @@
 package br.dev.modscleo4.todo.application.auth;
 
 import br.dev.modscleo4.todo.TestUtils;
-import br.dev.modscleo4.todo.domain.user.User;
 import br.dev.modscleo4.todo.domain.auth.JwtConfiguration;
-import br.dev.modscleo4.todo.domain.auth.TokenRepository;
+import br.dev.modscleo4.todo.domain.user.User;
+import br.dev.modscleo4.todo.infrastructure.persistence.JpaTokenRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,9 +19,7 @@ import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
 import java.security.spec.ECGenParameterSpec;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,7 +27,7 @@ class JwtTokenServiceTest {
     @Mock
     private JwtConfiguration jwtConfiguration;
     @Mock
-    private TokenRepository tokenRepository;
+    private JpaTokenRepository tokenRepository;
     @InjectMocks
     private JwtTokenServiceAdapter jwtTokenService;
 

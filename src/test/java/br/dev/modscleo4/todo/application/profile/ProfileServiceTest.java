@@ -3,9 +3,9 @@ package br.dev.modscleo4.todo.application.profile;
 import br.dev.modscleo4.todo.TestUtils;
 import br.dev.modscleo4.todo.domain.profile.Profile;
 import br.dev.modscleo4.todo.domain.profile.ProfileAlreadyExistsException;
-import br.dev.modscleo4.todo.domain.profile.ProfileNotFoundException;
-import br.dev.modscleo4.todo.domain.user.User;
 import br.dev.modscleo4.todo.domain.profile.ProfileRepository;
+import br.dev.modscleo4.todo.domain.user.User;
+import br.dev.modscleo4.todo.infrastructure.persistence.JpaProfileRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -13,19 +13,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProfileServiceTest {
     @Mock
-    private ProfileRepository profileRepository;
+    private JpaProfileRepository profileRepository;
     @InjectMocks
     private ProfileServiceAdapter profileService;
 
@@ -35,7 +31,7 @@ class ProfileServiceTest {
         user.setProfile(new Profile());
 
         assertThrows(ProfileAlreadyExistsException.class, () -> {
-            profileService.create(user, "Name", "12345678901", new Date());
+            profileService.create(user, "Name", "12345678901", LocalDate.now());
         });
     }
 
@@ -47,9 +43,9 @@ class ProfileServiceTest {
         ArgumentCaptor<Profile> captor = ArgumentCaptor.forClass(Profile.class);
         TestUtils.mockSave(profileRepository);
 
-        var created = profileService.create(user, "Name", "12345678901", new Date());
+        var created = profileService.create(user, "Name", "12345678901", LocalDate.now());
 
-        verify(profileRepository, times(1)).save(captor.capture());
+        verify((ProfileRepository) profileRepository, times(1)).save(captor.capture());
         var saved = captor.getValue();
 
         assertEquals("Name", saved.getName());
@@ -59,20 +55,15 @@ class ProfileServiceTest {
     }
 
     @Test
-    void update_shouldThrowWhenProfileNull() {
-        assertThrows(ProfileNotFoundException.class, () -> profileService.update(null, "Name"));
-    }
-
-    @Test
     void update_shouldModifyAndSave() {
         var profile = new Profile();
         profile.setName("Old");
 
-        when(profileRepository.save(profile)).thenReturn(profile);
+        when(((ProfileRepository) profileRepository).save(profile)).thenReturn(profile);
 
         var updated = profileService.update(profile, "New");
 
-        verify(profileRepository, times(1)).save(profile);
+        verify((ProfileRepository) profileRepository, times(1)).save(profile);
         assertEquals("New", updated.getName());
     }
 }

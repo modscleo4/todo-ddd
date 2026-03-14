@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ public class ProfileServiceAdapter implements ProfileServicePort {
     private final ProfileRepository repository;
 
     @Transactional
-    public Profile create(User user, String name, String cpf, Date birthDate) {
+    public Profile create(User user, String name, String cpf, LocalDate birthDate) {
         if (user.getProfile() != null) { throw new ProfileAlreadyExistsException(); }
 
         var profile = new Profile();
@@ -34,8 +34,6 @@ public class ProfileServiceAdapter implements ProfileServicePort {
 
     @Transactional
     public Profile update(Profile profile, String name) {
-        if (profile == null) { throw new ProfileNotFoundException(); }
-
         if (name != null) profile.setName(name);
 
         return repository.save(profile);

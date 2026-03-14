@@ -3,8 +3,9 @@ package br.dev.modscleo4.todo.application.note;
 import br.dev.modscleo4.todo.TestUtils;
 import br.dev.modscleo4.todo.domain.note.Note;
 import br.dev.modscleo4.todo.domain.note.NoteNotFoundException;
-import br.dev.modscleo4.todo.domain.user.User;
 import br.dev.modscleo4.todo.domain.note.NoteRepository;
+import br.dev.modscleo4.todo.domain.user.User;
+import br.dev.modscleo4.todo.infrastructure.persistence.JpaNoteRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -16,18 +17,13 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class NoteServiceTest {
     @Mock
-    private NoteRepository noteRepository;
+    private JpaNoteRepository noteRepository;
     @InjectMocks
     private NoteServiceAdapter noteService;
 
@@ -42,7 +38,7 @@ class NoteServiceTest {
 
         var created = noteService.create(owner, "Title", "Content");
 
-        verify(noteRepository, times(1)).save(captor.capture());
+        verify((NoteRepository) noteRepository, times(1)).save(captor.capture());
         var saved = captor.getValue();
 
         assertEquals("Title", saved.getTitle());
@@ -65,7 +61,7 @@ class NoteServiceTest {
         note.setId(UUID.randomUUID());
         note.setUser(other);
 
-        when(noteRepository.findById(note.getId())).thenReturn(Optional.of(note));
+        when(((NoteRepository) noteRepository).findById(note.getId())).thenReturn(Optional.of(note));
 
         assertThrows(NoteNotFoundException.class, () -> noteService.get(owner, note.getId().toString()));
     }
@@ -79,7 +75,7 @@ class NoteServiceTest {
         note.setId(UUID.randomUUID());
         note.setUser(owner);
 
-        when(noteRepository.findById(note.getId())).thenReturn(Optional.of(note));
+        when(((NoteRepository) noteRepository).findById(note.getId())).thenReturn(Optional.of(note));
 
         var found = noteService.get(owner, note.getId().toString());
 
@@ -98,7 +94,7 @@ class NoteServiceTest {
         note.setId(UUID.randomUUID());
         note.setUser(other);
 
-        when(noteRepository.findById(note.getId())).thenReturn(Optional.of(note));
+        when(((NoteRepository) noteRepository).findById(note.getId())).thenReturn(Optional.of(note));
 
         assertThrows(NoteNotFoundException.class, () -> noteService.update(owner, note.getId().toString(), "T", "C", true));
     }
@@ -115,12 +111,12 @@ class NoteServiceTest {
         note.setContent("OldC");
         note.setDone(false);
 
-        when(noteRepository.findById(note.getId())).thenReturn(Optional.of(note));
+        when(((NoteRepository) noteRepository).findById(note.getId())).thenReturn(Optional.of(note));
         TestUtils.mockSave(noteRepository);
 
         var updated = noteService.update(owner, note.getId().toString(), "New", null, true);
 
-        verify(noteRepository, times(1)).save(note);
+        verify((NoteRepository) noteRepository, times(1)).save(note);
         assertEquals("New", updated.getTitle());
         assertEquals("OldC", updated.getContent());
         assertTrue(updated.getDone());
@@ -138,7 +134,7 @@ class NoteServiceTest {
         note.setId(UUID.randomUUID());
         note.setUser(other);
 
-        when(noteRepository.findById(note.getId())).thenReturn(Optional.of(note));
+        when(((NoteRepository) noteRepository).findById(note.getId())).thenReturn(Optional.of(note));
 
         assertThrows(NoteNotFoundException.class, () -> noteService.delete(owner, note.getId().toString()));
     }
@@ -152,11 +148,11 @@ class NoteServiceTest {
         note.setId(UUID.randomUUID());
         note.setUser(owner);
 
-        when(noteRepository.findById(note.getId())).thenReturn(Optional.of(note));
+        when(((NoteRepository) noteRepository).findById(note.getId())).thenReturn(Optional.of(note));
 
         noteService.delete(owner, note.getId().toString());
 
-        verify(noteRepository, times(1)).delete(note);
+        verify((NoteRepository) noteRepository, times(1)).delete(note);
     }
 
     @Test
@@ -166,7 +162,7 @@ class NoteServiceTest {
 
         noteService.getAll(owner, Pageable.unpaged());
 
-        verify(noteRepository, times(1)).findAllByUser(owner, Pageable.unpaged());
+        verify((NoteRepository) noteRepository, times(1)).findAllByUser(owner, Pageable.unpaged());
     }
 }
 

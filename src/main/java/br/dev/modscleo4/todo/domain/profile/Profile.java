@@ -26,7 +26,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -51,7 +51,7 @@ public class Profile implements Serializable {
     @Column(nullable = false, length = 11, unique = true)
     private String cpf;
     @Column(nullable = false)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")

@@ -9,6 +9,8 @@ import br.dev.modscleo4.todo.domain.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,7 @@ public class NoteServiceAdapter implements NoteServicePort {
         return repository.save(note);
     }
 
+    @Cacheable(value = "notes", key = "#id")
     @Transactional(readOnly = true)
     public Note get(User owner, String id) {
         try (var _ = MDC.putCloseable("noteId", id)) {
@@ -49,6 +52,7 @@ public class NoteServiceAdapter implements NoteServicePort {
         }
     }
 
+    @CacheEvict(value = "notes", key = "#id")
     @Transactional
     public Note update(User owner, String id, String title, String content, Boolean done) {
         try (var _ = MDC.putCloseable("noteId", id)) {
@@ -65,6 +69,7 @@ public class NoteServiceAdapter implements NoteServicePort {
         }
     }
 
+    @CacheEvict(value = "notes", key = "#id")
     @Transactional
     public void delete(User owner, String id) {
         try (var _ = MDC.putCloseable("noteId", id)) {

@@ -2,6 +2,7 @@ package br.dev.modscleo4.todo.application.user;
 
 import br.dev.modscleo4.todo.TestUtils;
 import br.dev.modscleo4.todo.domain.user.UserRepository;
+import br.dev.modscleo4.todo.infrastructure.persistence.JpaUserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,9 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -26,7 +25,7 @@ class UserServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
     @Mock
-    private UserRepository userRepository;
+    private JpaUserRepository userRepository;
     @InjectMocks
     private UserServiceAdapter userService;
 
@@ -46,7 +45,7 @@ class UserServiceTest {
         var created = userService.create("a@b.com", "pwd");
 
         verify(passwordEncoder, times(1)).encode("pwd");
-        verify(userRepository, times(1)).save(any());
+        verify((UserRepository)userRepository, times(1)).save(any());
         assertEquals("a@b.com", created.getEmail());
         assertEquals("encoded", created.getPasswordHash());
     }
